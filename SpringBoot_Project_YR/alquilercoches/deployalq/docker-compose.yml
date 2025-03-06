@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    container_name: dbalquiler
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: alquilercoches
+      MARIADB_USER: root
+      MARIADB_PASSWORD: root
+    volumes:
+      - ./data:/var/lib/mariadb
+    ports:
+      - "3310:3306"
