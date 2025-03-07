@@ -35,7 +35,6 @@ public String getAlquiler( @PathVariable(value="id", required =false) String id,
     System.out.println("El alquiler es " +id);
     Alquiler alquiler = this.alquilerService.getId(id);
     System.out.println(alquiler);
-    //= this.GamasService.getId(id); //
     model.addAttribute("LAlquiler", alquiler);
     return "/www/alquiler/detalle";
 
