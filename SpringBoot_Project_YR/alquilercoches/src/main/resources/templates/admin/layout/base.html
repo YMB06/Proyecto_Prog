@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- xmls:layout indicamos que esta plantilla va  a ser heredad-->
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmls:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+lang="es-ES">
+<head lang="es-ES">
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{/webjars/materializecss/css/materialize.min.css}" rel="stylesheet">
+    <link rel="icon" href="/static/images/favicon.png">
+    <link rel="stylesheet" type="text/css" href="/static/css/www-css/indexJardineria.CSS">
+    <link rel="stylesheet" type="text/css" href="/static/css/admin-css/admin.css">
+
+
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 y CSS3</title>
+
+    </head>
+    <body>
+        <header th:replace="admin/layout/components/menuEjem1 :: HeaderEj1">
+          
+        </header>
+        
+        <main>
+           
+        </main>
+
+            
+        </footer>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/materializecss/js/materialize.min.js}"></script>
+</body>
+</html>
