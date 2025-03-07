@@ -29,7 +29,7 @@
 	<properties>
 		<java.version>23</java.version>
 	</properties>
-	<dependencies>
+			<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -59,8 +59,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+<dependency>
     <groupId>org.mariadb.jdbc</groupId>
     <artifactId>mariadb-java-client</artifactId>
     <version>3.5.2</version>
@@ -106,6 +112,7 @@
 </dependency>
 
 	</dependencies>
+
 
 	<build>
 		<plugins>
