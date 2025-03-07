@@ -1,0 +1,35 @@
+
+<html xmlns="http://www.thymeleaf.org" 
+layout:decorate="admin/layout/base">
+
+<main layout:fragment="content">
+
+<table>
+    <thead>
+        <tr >
+           
+            <th>Id</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Color</th>
+            <th>Precio</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+<tbody>
+    <tr th:each="coches : ${LCoches}">
+        <td th:text="${coches.id}"></td>
+        <td th:text="${coches.marca}"></td>
+        <td th:text="${coches.modelo}"></td>
+        <td th:text="${coches.año}"></td>
+        <td th:text="${coches.color}"></td>
+        <td th:text="${coches.precio}"></td>
+        <td><a th:href="@{/admin/Coches/editar/{id}(id=${coches.id})}">Editar</a></td>
+        <td><a th:href="@{/admin/Coches/borrar/{id}(id=${coches.id})}">Borrar</a></td>
+
+    </tr>
+</tbody>
+</table>
+</main>

@@ -33,10 +33,12 @@ public class AlquilerService {
         this.alquilerRepository.delete(alquiler);
     }
 
+    //delete by id
+    public void deleteById(String id){
+        this.alquilerRepository.deleteById(id);
+    }
     //getid
     public Alquiler getId(String id){
-        //findbyid (ORM) = select * from gamas where Gama = id
-        //ORM transforma el registro devuelto por el SGBD en un objeto Java que se almacena en la variable gama
         Alquiler alquiler = this.alquilerRepository.findById(id).get();
         System.out.println(alquiler);
         return alquiler;

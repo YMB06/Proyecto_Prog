@@ -1,0 +1,43 @@
+<html xmlns="http://www.thymeleaf.org" 
+layout:decorate="admin/layout/base">
+<section layout:fragment="content">
+
+<table>
+    <thead>
+        <tr >
+           
+            
+            <th>Id</th>
+            <th>Coche Id</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Cliente Nombre</th>
+            <th>Precio Total</th>
+    </thead>
+<tbody>
+    <tr th:each="alquileres : ${LAlquiler}">
+
+        <td th:text="${alquileres.id}"></td>
+        <td th:text="${alquileres.coche_id}"></td>
+        <td th:text="${alquileres.fecha_inicio}"></td>
+        <td th:text="${alquileres.fecha_fin}"></td>
+        <td th:text="${alquileres.cliente_nombre}"></td>
+        <td th:text="${alquileres.precio_total}"></td>
+        <td><a th:href="@{/admin/Alquileres/editar/{id}(id=${alquileres.id})}">Editar</a></td>
+        <td><a th:href="@{/admin/Alquileres/borrar/{id}(id=${alquileres.id})}">Borrar</a></td>
+
+
+
+    </tr>
+</tbody>
+</table>
+</main>
+<!--CREATE TABLE Alquileres (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    coche_id INT NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    cliente_nombre VARCHAR(100) NOT NULL,
+    precio_total DECIMAL(10, 2),
+    FOREIGN KEY (coche_id) REFERENCES Coches(id)
+);-->

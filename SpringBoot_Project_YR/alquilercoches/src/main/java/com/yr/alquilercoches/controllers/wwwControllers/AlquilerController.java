@@ -18,13 +18,13 @@ public class AlquilerController {
      @Autowired
     private AlquilerService alquilerService;
     @GetMapping("/alquiler")
-    public String home(Model model){
+    public String alquiler(Model model){
     
         List<Alquiler> alquileres
         = this.alquilerService.getAll(); //
         alquileres.forEach(System.out::println);
         model.addAttribute("LAlquiler", alquileres);
-        return "/www/alquiler";
+        return "/www/alquiler/index";
 
 }
 

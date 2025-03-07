@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class AdminController {
     
-     @GetMapping("/")
+     @GetMapping("/admin")
     public String admin(){
         return "/admin/index";
     }
