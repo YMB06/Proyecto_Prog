@@ -19,7 +19,6 @@ public class AdminAlquilerController {
     
         List<Alquiler> alquileres
         = this.alquilerService.getAll(); //
-        alquileres.forEach(System.out::println);
         model.addAttribute("LAlquiler", alquileres);
         return "/admin/alquileres";
 

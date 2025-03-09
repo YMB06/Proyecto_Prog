@@ -29,7 +29,7 @@ public class AlquilerController {
 }
 
 @GetMapping("/alquiler/{id}")
-public String getAlquiler( @PathVariable(value="id", required =false) String id, Model model){
+public String getAlquiler( @PathVariable(value="id", required =false) Long id, Model model){
     //Model model -> es un area de intercambio de datos entre el controlador y la vista, NO ES EL CONCEPTO DE MODELO
     //En la plantilla detalle.html tendremos el objeto "gama" que se ha pasado desde el controlador
     System.out.println("El alquiler es " +id);

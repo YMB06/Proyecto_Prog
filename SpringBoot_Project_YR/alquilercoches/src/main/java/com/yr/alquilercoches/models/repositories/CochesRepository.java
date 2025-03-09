@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.yr.alquilercoches.models.entities.Coches;
 
 @Repository
-public interface CochesRepository extends JpaRepository<Coches, String>{
+public interface CochesRepository extends JpaRepository<Coches, Long>{
     
 }

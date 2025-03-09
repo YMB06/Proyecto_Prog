@@ -1,24 +1,3 @@
-Crear la tabla de Coches
-sql
-CREATE TABLE Coches (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    marca VARCHAR(50) NOT NULL,
-    modelo VARCHAR(50) NOT NULL,
-    año INT NOT NULL,
-    color VARCHAR(30),
-    precio DECIMAL(10, 2)
-);
-Crear la tabla de Alquileres
-sql
-CREATE TABLE Alquileres (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    coche_id INT NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    cliente_nombre VARCHAR(100) NOT NULL,
-    precio_total DECIMAL(10, 2),
-    FOREIGN KEY (coche_id) REFERENCES Coches(id)
-);
 
 INSERT INTO coches (id, marca, modelo, año, color, precio) VALUES
 (1, 'Toyota', 'Corolla', 2018, 'Blanco', 15000.00),
@@ -32,7 +11,6 @@ INSERT INTO coches (id, marca, modelo, año, color, precio) VALUES
 (9, 'Nissan', 'Altima', 2017, 'Rojo', 14000.00),
 (10, 'Hyundai', 'Elantra', 2016, 'Gris', 13000.00);
 
-
 INSERT INTO alquileres (id, coche_id, fecha_inicio, fecha_fin, cliente_nombre, precio_total) VALUES
 (1, 1, '2025-03-01', '2025-03-05', 'Juan Perez', 500.00),
 (2, 2, '2025-03-02', '2025-03-06', 'Maria Garcia', 640.00),
@@ -44,3 +22,15 @@ INSERT INTO alquileres (id, coche_id, fecha_inicio, fecha_fin, cliente_nombre, p
 (8, 8, '2025-03-08', '2025-03-12', 'Lucia Fernandez', 810.00),
 (9, 9, '2025-03-09', '2025-03-13', 'Miguel Torres', 560.00),
 (10, 10, '2025-03-10', '2025-03-14', 'Isabel Sanchez', 520.00);
+
+INSERT INTO clientes (id, nombre, apellidos, email, telefono, dni) VALUES
+(1, 'María', 'López Gómez', 'maria.lopez@example.com', '600123456', '12345678A'),
+(2, 'Juan', 'Pérez Martínez', 'juan.perez@example.com', '610654321', '87654321B'),
+(3, 'Laura', 'Sánchez Ruiz', 'laura.sanchez@example.com', '620789123', '45678912C'),
+(4, 'Pedro', 'García López', 'pedro.garcia@example.com', '630987654', '78945612D'),
+(5, 'Ana', 'Fernández Díaz', 'ana.fernandez@example.com', '640321789', '14725836E'),
+(6, 'David', 'Rodríguez Vega', 'david.rodriguez@example.com', '650456123', '96325874F'),
+(7, 'Carmen', 'Martínez Torres', 'carmen.martinez@example.com', '660123789', '15975368G'),
+(8, 'Alberto', 'Jiménez Serrano', 'alberto.jimenez@example.com', '670789456', '85236974H'),
+(9, 'Julia', 'Romero Castro', 'julia.romero@example.com', '680456321', '74185296J'),
+(10, 'Raúl', 'Vargas Molina', 'raul.vargas@example.com', '690987123', '36925814K');

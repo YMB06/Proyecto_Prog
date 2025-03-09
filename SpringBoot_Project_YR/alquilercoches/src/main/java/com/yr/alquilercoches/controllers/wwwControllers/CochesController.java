@@ -26,13 +26,12 @@ public class CochesController {
 }
 
 @GetMapping("/coches/{id}")
-public String getAlquiler( @PathVariable(value="id", required =false) String id, Model model){
+public String getAlquiler( @PathVariable(value="id", required =false) Long id, Model model){
     System.out.println("El coche es " +id);
     Coches coche = this.cochesService.getId(id);
     System.out.println(coche);
     //= this.GamasService.getId(id); //
     model.addAttribute("LCoche", coche);
     return "/www/coche/detalle";
-
 }
 }

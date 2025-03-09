@@ -6,6 +6,7 @@ xmls:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 lang="es-ES">
 <head>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <link rel="icon" href="/static/images/faviconyr.png">
 
@@ -13,8 +14,10 @@ lang="es-ES">
     <title>Alquileres</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
-    <body>
-        <header>
+    <body class="d-flex">
+
+        <header  th:replace="~{admin/layout/components/MenuAdmin :: MenuAdmin}">
+            
         </header> 
         
         <main layout:fragment="content">

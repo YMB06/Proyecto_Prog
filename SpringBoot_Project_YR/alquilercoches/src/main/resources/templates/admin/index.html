@@ -1,2 +1,78 @@
-<html xmlns="http://www.thymeleaf.org" 
-layout:decorate="admin/layout/base">
+<html xmlns="http://www.thymeleaf.org" layout:decorate="admin/layout/base">
+<main layout:fragment="content" class="container-fluid p-4" style="margin-left: 250px;">
+    <h2 class="mb-4">Panel de Administración</h2>
+
+    <!-- Sección de tarjetas resumen -->
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white p-3">
+                <h5>Total de Coches</h5>
+                <p class="display-6" th:text="${totalcoches}">0</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white p-3">
+                <h5>Total Alquileres</h5>
+                <p class="display-6" th:text="${totalAlquileres}">0</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark p-3">
+                <h5>Clientes Registrados</h5>
+                <p class="display-6" th:text="${totalClientes}">0</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white p-3">
+                <h5>Ingresos Totales</h5>
+                <p class="display-6" th:text="${totalIngresos}">0 €</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Últimos alquileres -->
+    <div class="mt-5">
+        <h4>Últimos Alquileres</h4>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Coche</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="alquiler : ${ultimosAlquileres}">
+                        <td th:text="${alquiler.id}"></td>
+                        <td th:text="${alquiler.cliente_nombre}"></td>
+                        <td th:text="${alquiler.coche.modelo}"></td>
+                        <td th:text="${alquiler.fecha_inicio}"></td>
+                        <td th:text="${alquiler.fecha_fin}"></td>
+                        <td th:text="${alquiler.precio_total}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Accesos rápidos -->
+    <div class="mt-4">
+        <h4>Accesos Rápidos</h4>
+        <div class="d-flex gap-3">
+            <a href="/admin/coches/nuevo" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Agregar Coche
+            </a>
+            <a href="/admin/alquileres/nuevo" class="btn btn-success">
+                <i class="bi bi-calendar-plus"></i> Nuevo Alquiler
+            </a>
+            <a href="/admin/clientes" class="btn btn-warning">
+                <i class="bi bi-people"></i> Ver Clientes
+            </a>
+        </div>
+    </div>
+</main>
+</html>

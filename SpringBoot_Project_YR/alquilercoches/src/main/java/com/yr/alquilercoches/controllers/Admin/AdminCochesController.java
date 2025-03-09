@@ -15,10 +15,9 @@ public class AdminCochesController {
              @Autowired
     private CochesService cochesService;
     @GetMapping("/admin/coches")
-    public String alquiler(Model model){
+    public String coches(Model model){
         List<Coches> coches
-        = this.cochesService.getAll(); //
-        coches.forEach(System.out::println);
+        = this.cochesService.getAll();
         model.addAttribute("LCoches", coches);
         return "/admin/coches";
 }

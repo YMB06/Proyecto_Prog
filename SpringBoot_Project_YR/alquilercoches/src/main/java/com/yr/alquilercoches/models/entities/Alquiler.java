@@ -7,7 +7,11 @@ import javax.validation.constraints.NotEmpty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,11 +20,13 @@ public class Alquiler {
     
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false, name = "coche_id")
-    @NotEmpty
-    private String coche_id;
+    // Relación con la entidad Coche
+    @ManyToOne
+    @JoinColumn(name = "coche_id", nullable = false)
+    private Coches coche_id;
 
     @Column(nullable = false, name = "fecha_inicio")
     @NotEmpty
@@ -43,7 +49,7 @@ public class Alquiler {
     }
 
 
-    public Alquiler(String id, String coche_id, String fecha_inicio, String fecha_fin, String cliente_nombre, BigDecimal precio_total) {
+    public Alquiler(Long id, Coches coche_id, String fecha_inicio, String fecha_fin, String cliente_nombre, BigDecimal precio_total) {
         this.id = id;
         this.coche_id = coche_id;
         this.fecha_inicio = fecha_inicio;
@@ -66,19 +72,19 @@ public class Alquiler {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getCoche_id() {
+    public Coches getCoche_id() {
         return this.coche_id;
     }
 
-    public void setCoche_id(String coche_id) {
+    public void setCoche_id(Coches coche_id) {
         this.coche_id = coche_id;
     }
 

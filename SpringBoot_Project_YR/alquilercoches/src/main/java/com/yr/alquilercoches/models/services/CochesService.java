@@ -17,7 +17,7 @@ public class CochesService {
         return cochesRepository.findAll();
     }
 
-    public Coches findById(String id){
+    public Coches findById(Long id){
         return cochesRepository.findById(id).orElse(null);
     }
 
@@ -36,11 +36,11 @@ public class CochesService {
     }
 
 
-    public void deleteById(String id){
+    public void deleteById(Long id){
         cochesRepository.deleteById(id);
     }
     
-    public Coches getId(String id){
+    public Coches getId(Long id){
         Coches coche = cochesRepository.findById(id).get();
         System.out.println(coche);
         return coche;

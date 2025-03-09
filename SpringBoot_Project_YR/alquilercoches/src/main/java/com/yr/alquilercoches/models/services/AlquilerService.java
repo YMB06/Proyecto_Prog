@@ -34,11 +34,11 @@ public class AlquilerService {
     }
 
     //delete by id
-    public void deleteById(String id){
+    public void deleteById(Long id){
         this.alquilerRepository.deleteById(id);
     }
     //getid
-    public Alquiler getId(String id){
+    public Alquiler getId(Long id){
         Alquiler alquiler = this.alquilerRepository.findById(id).get();
         System.out.println(alquiler);
         return alquiler;

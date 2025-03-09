@@ -2,34 +2,39 @@
 <html xmlns="http://www.thymeleaf.org" 
 layout:decorate="admin/layout/base">
 
-<main layout:fragment="content">
-
-<table>
-    <thead>
-        <tr >
-           
-            <th>Id</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Año</th>
-            <th>Color</th>
-            <th>Precio</th>
-            <th>Editar</th>
-            <th>Borrar</th>
-        </tr>
-    </thead>
-<tbody>
-    <tr th:each="coches : ${LCoches}">
-        <td th:text="${coches.id}"></td>
-        <td th:text="${coches.marca}"></td>
-        <td th:text="${coches.modelo}"></td>
-        <td th:text="${coches.año}"></td>
-        <td th:text="${coches.color}"></td>
-        <td th:text="${coches.precio}"></td>
-        <td><a th:href="@{/admin/Coches/editar/{id}(id=${coches.id})}">Editar</a></td>
-        <td><a th:href="@{/admin/Coches/borrar/{id}(id=${coches.id})}">Borrar</a></td>
-
-    </tr>
-</tbody>
-</table>
+<main layout:fragment="content" class="container-fluid flex-grow-1 p-4" style="margin-left: 250px;">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Año</th>
+                        <th>Color</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="coches : ${LCoches}">
+                        <td th:text="${coches.id}"></td>
+                        <td th:text="${coches.marca}"></td>
+                        <td th:text="${coches.modelo}"></td>
+                        <td th:text="${coches.año}"></td>
+                        <td th:text="${coches.color}"></td>
+                        <td>
+                            <a th:href="@{/admin/Coches/editar/{id}(id=${coches.id})}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/Coches/borrar/{id}(id=${coches.id})}" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Borrar
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>
