@@ -21,7 +21,7 @@ layout:decorate="admin/layout/base">
                         <td th:text="${alquileres.fecha_inicio}"></td>
                         <td th:text="${alquileres.fecha_fin}"></td>
                         <td th:text="${alquileres.cliente.id}"></td>
-                        <td th:text="${alquileres.precio_total}"></td>
+                        <td th:text="${alquileres.precio_total + ' €'}"></td>
                         <td>
                             <a th:href="@{/admin/Alquileres/editar/{id}(id=${alquileres.id})}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar

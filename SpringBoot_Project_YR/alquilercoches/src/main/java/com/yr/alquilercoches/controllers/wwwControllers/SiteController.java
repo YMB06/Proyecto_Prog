@@ -10,4 +10,5 @@ public class SiteController {
     public String site(){
         return "www/site/index";
     }
+    
 }

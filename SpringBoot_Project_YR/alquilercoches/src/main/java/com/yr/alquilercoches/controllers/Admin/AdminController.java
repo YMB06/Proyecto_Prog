@@ -13,14 +13,14 @@ import java.math.BigDecimal;
 
 @Controller
 public class AdminController {
-
+    
     @Autowired
     private CochesService cochesService;
 
     @Autowired
     private AlquilerService alquilerService;
 
-    @GetMapping("/admin")
+    @GetMapping({"/admin", "/admin/index"})  // Handle both URLs
     public String admin(Model model) {
         int totalCoches = cochesService.getAll().size();
         int totalAlquileres = alquilerService.getAll().size();
@@ -32,9 +32,8 @@ public class AdminController {
         model.addAttribute("totalcoches", totalCoches);
         model.addAttribute("totalAlquileres", totalAlquileres);
         model.addAttribute("totalClientes", totalClientes);
-
         model.addAttribute("totalIngresos", totalIngresos);
 
-        return "/admin/index";
+        return "admin/index";  // Remove the leading slash
     }
 }
