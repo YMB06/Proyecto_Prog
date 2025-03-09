@@ -10,17 +10,17 @@ layout:decorate="admin/layout/base">
                         <th>Coche Id</th>
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
-                        <th>Cliente Nombre</th>
+                        <th>Cliente</th>
                         <th>Precio Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="alquileres : ${LAlquiler}">
                         <td th:text="${alquileres.id}"></td>
-                        <td th:text="${alquileres.coche_id.id}"></td>
+                        <td th:text="${alquileres.coche.id}"></td>
                         <td th:text="${alquileres.fecha_inicio}"></td>
                         <td th:text="${alquileres.fecha_fin}"></td>
-                        <td th:text="${alquileres.cliente_nombre}"></td>
+                        <td th:text="${alquileres.cliente.id}"></td>
                         <td th:text="${alquileres.precio_total}"></td>
                         <td>
                             <a th:href="@{/admin/Alquileres/editar/{id}(id=${alquileres.id})}" class="btn btn-primary btn-sm">

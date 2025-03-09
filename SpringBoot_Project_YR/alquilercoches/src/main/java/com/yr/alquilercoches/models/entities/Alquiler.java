@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,7 +27,7 @@ public class Alquiler {
     // Relación con la entidad Coche
     @ManyToOne
     @JoinColumn(name = "coche_id", nullable = false)
-    private Coches coche_id;
+    private Coches coche;
 
     @Column(nullable = false, name = "fecha_inicio")
     @NotEmpty
@@ -36,9 +37,9 @@ public class Alquiler {
     @NotEmpty
     private String fecha_fin;
 
-    @Column(nullable = false, name = "cliente_nombre")
-    @NotEmpty
-    private String cliente_nombre;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Clientes cliente;
 
     @Column(nullable = false, name = "precio_total")
     @NotEmpty
@@ -49,12 +50,12 @@ public class Alquiler {
     }
 
 
-    public Alquiler(Long id, Coches coche_id, String fecha_inicio, String fecha_fin, String cliente_nombre, BigDecimal precio_total) {
+    public Alquiler(Long id, Coches coche, String fecha_inicio, String fecha_fin, Clientes cliente, BigDecimal precio_total) {
         this.id = id;
-        this.coche_id = coche_id;
+        this.coche = coche;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
-        this.cliente_nombre = cliente_nombre;
+        this.cliente = cliente;
         this.precio_total = precio_total;
     }
 
@@ -63,10 +64,10 @@ public class Alquiler {
     public String toString() {
         return "Alquileres{" +
                 "id='" + this.id + '\'' +
-                ", coche_id='" + coche_id + '\'' +
+                ", coche_id='" + coche + '\'' +
                 ", fecha_inicio='" + fecha_inicio + '\'' +
                 ", fecha_fin='" + fecha_fin + '\'' +
-                ", cliente_nombre='" + cliente_nombre + '\'' +
+                ", cliente_id='" + cliente + '\'' +
                 ", precio_total='" + precio_total + '\'' +
                 '}';
     }
@@ -80,12 +81,12 @@ public class Alquiler {
         this.id = id;
     }
 
-    public Coches getCoche_id() {
-        return this.coche_id;
+    public Coches getCoche() {
+        return this.coche;
     }
-
-    public void setCoche_id(Coches coche_id) {
-        this.coche_id = coche_id;
+    
+    public void setCoche(Coches coche) {
+        this.coche = coche;
     }
 
     public String getFecha_inicio() {
@@ -103,13 +104,12 @@ public class Alquiler {
     public void setFecha_fin(String fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
-
-    public String getCliente_nombre() {
-        return this.cliente_nombre;
+    public Clientes getCliente() {
+        return this.cliente;
     }
-
-    public void setCliente_nombre(String cliente_nombre) {
-        this.cliente_nombre = cliente_nombre;
+    
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
     }
 
     public BigDecimal getPrecio_total() {
