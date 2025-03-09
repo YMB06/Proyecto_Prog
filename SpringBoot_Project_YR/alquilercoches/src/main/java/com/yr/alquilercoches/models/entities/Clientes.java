@@ -31,6 +31,18 @@ public class Clientes {
         @Column(nullable = false, unique = true)
         private String dni;
 
+         // Nuevo campo: Nombre de usuario (único)
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    // Nuevo campo: Contraseña cifrada
+    @Column(nullable = false)
+    private String password;
+
+    // Nuevo campo: Rol del cliente (USER, ADMIN, etc.)
+    @Column(nullable = false)
+    private String role;
+
         // Getters y Setters
         public Long getId() {
             return id;
@@ -80,6 +92,30 @@ public class Clientes {
             this.dni = dni;
         }
 
+        public String getUsername() {
+            return username;
+        }
+    
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    
+        public String getPassword() {
+            return password;
+        }
+    
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    
+        public String getRole() {
+            return role;
+        }
+    
+        public void setRole(String role) {
+            this.role = role;
+        }
+        
         // toString
         @Override
         public String toString() {
@@ -90,6 +126,9 @@ public class Clientes {
                     ", email='" + email + '\'' +
                     ", telefono='" + telefono + '\'' +
                     ", dni='" + dni + '\'' +
+                    ", username='" + username + '\'' +
+                    ", password='" + password + '\'' +
+                    ", role='" + role + '\'' +
                     '}';
         }
 
@@ -97,12 +136,15 @@ public class Clientes {
         public Clientes() {
         }
 
-        public Clientes(Long id, String nombre, String apellidos, String email, String telefono, String dni) {
+        public Clientes(Long id, String nombre, String apellidos, String email, String telefono, String dni, String username, String password, String role) {
             this.id = id;
             this.nombre = nombre;
             this.apellidos = apellidos;
             this.email = email;
             this.telefono = telefono;
             this.dni = dni;
+            this.username = username;
+            this.password = password;
+            this.role = role;
         }
     }

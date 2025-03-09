@@ -3,6 +3,8 @@ package com.yr.alquilercoches.models.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.yr.alquilercoches.models.entities.Clientes;
@@ -11,19 +13,29 @@ import com.yr.alquilercoches.models.repositories.ClienteRepository;
 @Service
 public class ClienteService  {
     
-    @Autowired
-    ClienteRepository clienteRepository;
+     @Autowired
+    private ClienteRepository clienteRepository;
 
+   // Use PasswordEncoder, not BCryptPasswordEncoder directly
+
+   @Autowired
+   private PasswordEncoder passwordEncoder;
+
+   public Clientes save(Clientes cliente) {
+       // Ensure password is encoded when saving
+       System.out.println("Saving user with username: " + cliente.getUsername());
+       String encodedPassword = passwordEncoder.encode(cliente.getPassword());
+       cliente.setPassword(encodedPassword);
+       System.out.println("Password encoded: " + encodedPassword);
+       return clienteRepository.save(cliente);
+   }
+    
      public List<Clientes> getAll(){
         return clienteRepository.findAll();
     }
 
     public Clientes findById(Long id){
         return clienteRepository.findById(id).orElse(null);
-    }
-
-    public Clientes save(Clientes cliente){
-        return clienteRepository.save(cliente);
     }
 
     //update
@@ -45,6 +57,10 @@ public class ClienteService  {
         Clientes cliente = clienteRepository.findById(id).get();
         System.out.println(cliente);
         return cliente;
+    }
+
+    public Clientes findByUsername(String user) {
+        return clienteRepository.findByUsername(user).orElse(null);
     }
 
 }
