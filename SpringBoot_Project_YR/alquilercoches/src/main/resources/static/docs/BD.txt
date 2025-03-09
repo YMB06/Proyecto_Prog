@@ -10,9 +10,21 @@ INSERT INTO coches (id, marca, modelo, año, color, precio) VALUES
 (9, 'Nissan', 'Altima', 2017, 'Rojo', 14000.00),
 (10, 'Hyundai', 'Elantra', 2016, 'Gris', 13000.00);
 
+-- First, delete existing admin if any
+DELETE FROM clientes WHERE username = 'admin';
+
+-- Then insert new admin with properly encrypted password (this is 'admin' encrypted)
 INSERT INTO clientes (nombre, apellidos, email, password, role, dni, telefono, username) 
-SELECT 'admin', 'Admin', 'admin@admin.com', '$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW', 'ROLE_ADMIN', '00000000A', '000000000', 'admin'
-WHERE NOT EXISTS (SELECT 1 FROM clientes WHERE nombre = 'admin');
+VALUES (
+    'admin',
+    'Administrator',
+    'admin@admin.com',
+    '$2a$10$2RmSYjdH.lNywwCnIb5E0OZMOS3x9kOk5t5Vhs8XG3YHo2YA2b5eu',
+    'ROLE_ADMIN',
+    '00000000A',
+    '000000000',
+    'admin'
+);
 INSERT INTO clientes (id, nombre, apellidos, email, telefono, dni, username, password, role) VALUES
 (11, 'María', 'López Gómez', 'maria.lopez@example.com', '600123456', '12345678A', 'maria_lopez', '$2a$10$abcdefg1234567890cifrada', 'USER'),
 (2, 'Juan', 'Pérez Martínez', 'juan.perez@example.com', '610654321', '87654321B', 'juan_perez', '$2a$10$abcdefg1234567890cifrada', 'USER'),
