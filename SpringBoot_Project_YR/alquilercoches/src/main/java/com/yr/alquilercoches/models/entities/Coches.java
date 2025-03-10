@@ -42,6 +42,7 @@ public class Coches {
     @Digits(integer = 10, fraction = 2)
     private BigDecimal precio;
 
+    
     public Coches() {
     }
 

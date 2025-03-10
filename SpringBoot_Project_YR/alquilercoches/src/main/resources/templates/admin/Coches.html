@@ -34,8 +34,9 @@ layout:decorate="admin/layout/base">
                         <td th:text="${coches.modelo}"></td>
                         <td th:text="${coches.año}"></td>
                         <td th:text="${coches.color}"></td>
+                        
                         <td>
-                            <a th:href="@{/admin/Coches/editar/{id}(id=${coches.id})}" class="btn btn-primary btn-sm">
+                            <a th:href="@{/admin/coches/editar/{id}(id=${coches.id})}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
                             </a>
                         </td>

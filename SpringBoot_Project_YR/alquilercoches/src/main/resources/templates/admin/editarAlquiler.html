@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{admin/layout/base}">
+<html xmlns="http://www.thymeleaf.org" 
+layout:decorate="admin/layout/base">
 
 <main layout:fragment="content" class="container-fluid flex-grow-1 p-4" style="margin-left: 250px;">
     <h1>Editar Alquiler</h1>
@@ -52,4 +50,3 @@
 
     <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
 </main>
-</html>
