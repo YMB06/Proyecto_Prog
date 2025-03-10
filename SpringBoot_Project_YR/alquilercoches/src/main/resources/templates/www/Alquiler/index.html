@@ -1,2 +1,74 @@
-<html xmlns="http://www.thymeleaf.org" 
-layout:decorate="www/layout/base">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{www/layout/base}">
+
+<div layout:fragment="content">
+    <div class="container py-4">
+        <h2 class="text-center mb-4">Mis Alquileres</h2>
+
+        <div class="row">
+            <!-- Show message if no rentals -->
+            <div th:if="${#lists.isEmpty(LAlquiler)}" class="col-12 text-center">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    No tienes alquileres en este momento.
+                </div>
+            </div>
+
+            <!-- Rentals Cards -->
+            <div th:each="alquiler : ${LAlquiler}" class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-car-front text-primary me-2"></i>
+                            <span th:text="${alquiler.coche.marca + ' ' + alquiler.coche.modelo}">Car Name</span>
+                        </h5>
+                        <div class="card-text">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="bi bi-calendar-check text-primary"></i>
+                                    <strong>Inicio:</strong>
+                                    <span th:text="${alquiler.fecha_inicio}" class="ms-2"></span>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-calendar-x text-primary"></i>
+                                    <strong>Fin:</strong>
+                                    <span th:text="${alquiler.fecha_fin}" class="ms-2"></span>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-currency-euro text-primary"></i>
+                                    <strong>Precio Total:</strong>
+                                    <span th:text="${alquiler.precio_total + '€'}" class="ms-2"></span>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-palette text-primary"></i>
+                                    <strong>Color:</strong>
+                                    <span th:text="${alquiler.coche.color}" class="ms-2"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .card {
+            transition: transform 0.2s ease-in-out;
+            border-radius: 10px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .bi {
+            margin-right: 0.5rem;
+        }
+        .alert {
+            border-radius: 8px;
+        }
+    </style>
+</div>
+</html>

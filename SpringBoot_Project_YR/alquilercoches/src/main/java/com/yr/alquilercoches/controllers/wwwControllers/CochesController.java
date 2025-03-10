@@ -14,24 +14,24 @@ import com.yr.alquilercoches.models.services.CochesService;
 @Controller
 public class CochesController {
 
-         @Autowired
+    @Autowired
     private CochesService cochesService;
+
     @GetMapping("/coches")
     public String alquiler(Model model){
-        List<Coches> coches
-        = this.cochesService.getAll(); //
-        coches.forEach(System.out::println);
-        model.addAttribute("LCoche", coches);
-        return "/www/coches/index";
-}
+        List<Coches> coches = this.cochesService.getAll();
+        // Change from "LCoche" to "coches" to match template
+        model.addAttribute("coches", coches);
+        // Remove leading slash
+        return "www/Coches/index";
+    }
 
-@GetMapping("/coches/{id}")
-public String getAlquiler( @PathVariable(value="id", required =false) Long id, Model model){
-    System.out.println("El coche es " +id);
-    Coches coche = this.cochesService.getId(id);
-    System.out.println(coche);
-    //= this.GamasService.getId(id); //
-    model.addAttribute("LCoche", coche);
-    return "/www/coche/detalle";
-}
+    @GetMapping("/coches/{id}")
+    public String getAlquiler(@PathVariable Long id, Model model){
+        Coches coche = this.cochesService.getId(id);
+        // Change from "LCoche" to "coche" for details page
+        model.addAttribute("coche", coche);
+        // Fix template path and remove leading slash
+        return "www/Coches/detalle";
+    }
 }

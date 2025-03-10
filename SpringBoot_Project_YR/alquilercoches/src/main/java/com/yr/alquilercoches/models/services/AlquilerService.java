@@ -2,6 +2,8 @@ package com.yr.alquilercoches.models.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import com.yr.alquilercoches.models.entities.Alquiler;
 import com.yr.alquilercoches.models.repositories.AlquilerRepository;
@@ -54,5 +56,40 @@ public class AlquilerService {
     public List<Alquiler> getUltimosAlquileres(int limit) {
         return alquilerRepository.findTop10ByOrderByIdDesc();
     }
+
+    public boolean isCarAvailable(Long carId, String startDate, String endDate) {
+        try {
+            List<Alquiler> existingRentals = alquilerRepository.findByCocheId(carId);
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+
+            // First check if the dates are valid
+            if (start.isAfter(end)) {
+                return false;
+            }
+
+            // Check against existing rentals
+            for (Alquiler rental : existingRentals) {
+                try {
+                    LocalDate rentalStart = LocalDate.parse(rental.getFecha_inicio());
+                    LocalDate rentalEnd = LocalDate.parse(rental.getFecha_fin());
+
+                    // Check if dates overlap
+                    boolean overlap = !(end.isBefore(rentalStart) || start.isAfter(rentalEnd));
+                    if (overlap) {
+                        return false;
+                    }
+                } catch (Exception e) {
+                    // Skip invalid dates in existing rentals
+                    continue;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            // If there's any error parsing dates or other issues, consider the car unavailable
+            return false;
+        }
+    }
+
     
 }

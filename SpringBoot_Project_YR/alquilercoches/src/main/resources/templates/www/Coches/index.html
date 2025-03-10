@@ -1,2 +1,65 @@
-<html xmlns="http://www.thymeleaf.org" 
-layout:decorate="www/layout/base">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{www/layout/base}">
+
+<div layout:fragment="content">
+    <div class="container py-4">
+        <!-- Page Title -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 class="text-center">Nuestros Vehículos</h1>
+                <p class="lead text-center">Encuentra el coche perfecto para tu viaje</p>
+            </div>
+        </div>
+
+        <!-- Cars Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col" th:each="coche : ${coches}">
+                <div class="card h-100 shadow-sm hover-effect">
+                    <!-- Car Image -->
+                    <img th:if="${coche.imagen}" 
+                         th:src="@{/uploads/coches/{imagen}(imagen=${coche.imagen})}"
+                         class="card-img-top" 
+                         style="height: 200px; object-fit: cover;"
+                         th:alt="${coche.marca + ' ' + coche.modelo}">
+                    
+                    <!-- Car Details -->
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold" th:text="${coche.marca + ' ' + coche.modelo}">Car Name</h5>
+                        <div class="card-text">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="bi bi-calendar3"></i> <span th:text="${'Año: ' + coche.año}"></span></li>
+                                <li class="mb-2"><i class="bi bi-palette"></i> <span th:text="${'Color: ' + coche.color}"></span></li>
+                                <li class="mb-2"><i class="bi bi-currency-euro"></i> <span th:text="${'Precio por día: ' + coche.precio + '€'}"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-grid">
+                            <a th:href="@{/coches/{id}(id=${coche.id})}" 
+                               class="btn btn-primary">
+                                <i class="bi bi-info-circle me-2"></i>Ver Detalles
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .hover-effect {
+            transition: transform 0.2s ease-in-out;
+        }
+        .hover-effect:hover {
+            transform: translateY(-5px);
+        }
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+</div>
+</html>

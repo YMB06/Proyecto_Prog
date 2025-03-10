@@ -1,2 +1,58 @@
-<html xmlns="http://www.thymeleaf.org" 
-layout:decorate="www/layout/base">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{www/layout/base}">
+
+<div layout:fragment="content">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <!-- Car Image Column -->
+            <div class="col-12 col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <img th:if="${coche.imagen}" 
+                         th:src="@{/uploads/coches/{imagen}(imagen=${coche.imagen})}"
+                         class="card-img-top" 
+                         style="height: 300px; object-fit: contain; max-width: 100%;"
+                         th:alt="${coche.marca + ' ' + coche.modelo}">
+                </div>
+            </div>
+            
+            <!-- Car Details Column -->
+            <div class="col-12 col-md-6">
+                <h2 class="h3 mb-4" th:text="${coche.marca + ' ' + coche.modelo}">Car Name</h2>
+                
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Detalles del Vehículo</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="bi bi-calendar3 text-primary"></i>
+                                <strong>Año:</strong>
+                                <span th:text="${coche.año}" class="ms-2"></span>
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-palette text-primary"></i>
+                                <strong>Color:</strong>
+                                <span th:text="${coche.color}" class="ms-2"></span>
+                            </li>
+                            <li class="mb-3">
+                                <i class="bi bi-currency-euro text-primary"></i>
+                                <strong>Precio por día:</strong>
+                                <span th:text="${coche.precio + '€'}" class="ms-2"></span>
+                            </li>
+                        </ul>
+                        
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-primary">
+                                <i class="bi bi-calendar-plus me-2"></i>Reservar Ahora
+                            </a>
+                            <a th:href="@{/coches}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Volver a la lista
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
