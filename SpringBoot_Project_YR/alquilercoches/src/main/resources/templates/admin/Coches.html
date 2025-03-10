@@ -4,11 +4,18 @@ layout:decorate="admin/layout/base">
 
 <main layout:fragment="content" class="container-fluid flex-grow-1 p-4" style="margin-left: 250px;">
     <div class="row">
-        <div class="col-12 mb-3">
-            <a href="/admin/coches/nuevo" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i> Nuevo Coche
-            </a>
-        </div>
+        <!-- Add this near the top of your existing table -->
+<div class="mb-3">
+    <a th:href="@{/admin/coches/crear}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Nuevo Coche
+    </a>
+</div>
+
+<!-- Add this for showing messages -->
+<div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+        
+        <!-- Add this for showing messages -->
+        <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-sm">
                 <thead class="table-dark">

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/base}">
+
+<main layout:fragment="content" class="container-fluid flex-grow-1 p-4" style="margin-left: 250px;">
+    <h1>Crear Nuevo Alquiler</h1>
+    
+    <form th:action="@{/admin/alquileres/crear}" th:object="${alquiler}" method="post">
+        <div class="form-group mb-3">
+            <label for="coche">Coche:</label>
+            <select th:field="*{coche}" id="coche" class="form-control" required>
+                <option value="">Seleccione un coche</option>
+                <option th:each="coche : ${coches}"
+                        th:value="${coche.id}"
+                        th:text="${coche.marca + ' ' + coche.modelo}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="cliente">Cliente:</label>
+            <select th:field="*{cliente}" id="cliente" class="form-control" required>
+                <option value="">Seleccione un cliente</option>
+                <option th:each="cliente : ${clientes}"
+                        th:value="${cliente.id}"
+                        th:text="${cliente.nombre + ' ' + cliente.apellidos}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="fecha_inicio">Fecha de inicio:</label>
+            <input type="date" th:field="*{fecha_inicio}" id="fecha_inicio" class="form-control" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="fecha_fin">Fecha de fin:</label>
+            <input type="date" th:field="*{fecha_fin}" id="fecha_fin" class="form-control" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="precio_total">Precio total:</label>
+            <input type="number" th:field="*{precio_total}" id="precio_total" step="0.01" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear Alquiler</button>
+        <a th:href="@{/admin/alquileres}" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+    <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
+</main>
+</html>
