@@ -1,2 +1,44 @@
-<html xmlns="http://www.thymeleaf.org" 
-layout:decorate="www/layout/base">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{www/layout/base}">
+
+<div layout:fragment="content">
+    <!-- Hero Section with Carousel -->
+    <div id="carCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div th:each="coche, iterStat : ${coches}" 
+                 th:class="${iterStat.first} ? 'carousel-item active' : 'carousel-item'">
+                <a th:href="@{/coches/{id}(id=${coche.id})}">
+                    <img th:if="${coche.imagen}" 
+                         th:src="@{/uploads/coches/{imagen}(imagen=${coche.imagen})}"
+                         class="d-block w-100" style="height: 400px; object-fit: cover;"
+                         th:alt="${coche.marca + ' ' + coche.modelo}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 th:text="${coche.marca + ' ' + coche.modelo}"></h5>
+                        <p th:text="${'Año: ' + coche.año + ' - Precio por día: ' + coche.precio + '€'}"></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Additional content -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2>Nuestra Flota de Vehículos</h2>
+                <p class="lead">Descubre nuestra amplia selección de coches para alquilar</p>
+                <a href="/coches" class="btn btn-primary">Ver todos los coches</a>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

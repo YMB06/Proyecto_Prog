@@ -77,7 +77,8 @@ public class AdminAlquilerController {
             model.addAttribute("alquiler", alquiler);
             model.addAttribute("coches", coches);
             model.addAttribute("clientes", clientes);
-            return "admin/editarAlquiler";
+            
+            return "admin/editarAlquiler"; // Note: case sensitive!
         } catch (Exception e) {
             return "redirect:/admin/alquileres";
         }

@@ -1,10 +1,11 @@
 <html xmlns="http://www.thymeleaf.org" 
 layout:decorate="admin/layout/base">
-
 <main layout:fragment="content" class="container-fluid flex-grow-1 p-4" style="margin-left: 250px;">
     <h1>Editar Alquiler</h1>
     
     <form th:action="@{/admin/alquileres/editar/{id}(id=${alquiler.id})}" th:object="${alquiler}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        
         <div class="form-group mb-3">
             <label for="coche">Coche:</label>
             <select th:field="*{coche}" id="coche" class="form-control" required>
@@ -41,12 +42,65 @@ layout:decorate="admin/layout/base">
 
         <div class="form-group mb-3">
             <label for="precio_total">Precio total:</label>
-            <input type="number" th:field="*{precio_total}" id="precio_total" step="0.01" class="form-control" required>
+            <input type="number" th:field="*{precio_total}" id="precio_total" step="0.01" class="form-control" readonly>
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         <a th:href="@{/admin/alquileres}" class="btn btn-secondary">Cancelar</a>
     </form>
 
+    <!-- Store car data in JavaScript variables -->
+    <script th:inline="javascript">
+        const carData = /*[[${coches}]]*/ [];
+        const currentCarId = /*[[${alquiler.coche.id}]]*/ null;
+        const currentStartDate = /*[[${alquiler.fecha_inicio}]]*/ '';
+        const currentEndDate = /*[[${alquiler.fecha_fin}]]*/ '';
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cocheSelect = document.getElementById('coche');
+        const fechaInicio = document.getElementById('fecha_inicio');
+        const fechaFin = document.getElementById('fecha_fin');
+        const precioTotal = document.getElementById('precio_total');
+        
+        const precios = {};
+        
+        // Create a map of car IDs to their daily prices
+        carData.forEach(coche => {
+            precios[coche.id] = parseFloat(coche.precio);
+            console.log(`Car ID: ${coche.id}, Price: ${coche.precio}`);
+        });
+
+        function calcularPrecioTotal() {
+            const cocheId = cocheSelect.value;
+            const inicio = new Date(fechaInicio.value);
+            const fin = new Date(fechaFin.value);
+
+            if (cocheId && fechaInicio.value && fechaFin.value) {
+                const diferencia = fin.getTime() - inicio.getTime();
+                const dias = Math.max(1, Math.ceil(diferencia / (1000 * 3600 * 24)));
+                const precioPorDia = precios[cocheId];
+
+                if (dias > 0 && precioPorDia) {
+                    const total = (dias * precioPorDia).toFixed(2);
+                    precioTotal.value = total;
+                    console.log(`Days: ${dias}, Daily price: ${precioPorDia}, Total: ${total}`);
+                }
+            }
+        }
+
+        cocheSelect.addEventListener('change', calcularPrecioTotal);
+        fechaInicio.addEventListener('change', calcularPrecioTotal);
+        fechaFin.addEventListener('change', calcularPrecioTotal);
+
+        // Calculate initial price
+        if (currentCarId && currentStartDate && currentEndDate) {
+            calcularPrecioTotal();
+        }
+    });
+    </script>
+
     <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
 </main>
+</html>

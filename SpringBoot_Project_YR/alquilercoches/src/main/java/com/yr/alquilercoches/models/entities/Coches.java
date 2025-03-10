@@ -42,18 +42,30 @@ public class Coches {
     @Digits(integer = 10, fraction = 2)
     private BigDecimal precio;
 
+    @Column(name = "imagen")
+    private String imagen; // This will store the image file name
+
+    // Add getter and setter
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
     
     public Coches() {
     }
 
 
-    public Coches(Long id, String marca, String modelo, int año, String color, BigDecimal precio) {
+    public Coches(Long id, String marca, String modelo, int año, String color, BigDecimal precio, String imagen) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
         this.año = año;
         this.color = color;
         this.precio = precio;
+        this.imagen = imagen;
     }
 
 
@@ -66,6 +78,7 @@ public class Coches {
                 ", año='" + año + '\'' +
                 ", color='" + color + '\'' +
                 ", precio='" + precio + '\'' +
+                ", imagen='" + imagen + '\'' +
                 '}';
     }
 

@@ -43,6 +43,16 @@ public class AlquilerService {
         System.out.println(alquiler);
         return alquiler;
     }
-    
+    public List<Alquiler> findByCocheId(Long cocheId) {
+        return alquilerRepository.findByCocheId(cocheId);
+    }
 
+    public List<Alquiler> findByClienteId(Long clienteId) {
+        return alquilerRepository.findByClienteId(clienteId);
+    }
+
+    public List<Alquiler> getUltimosAlquileres(int limit) {
+        return alquilerRepository.findTop10ByOrderByIdDesc();
+    }
+    
 }

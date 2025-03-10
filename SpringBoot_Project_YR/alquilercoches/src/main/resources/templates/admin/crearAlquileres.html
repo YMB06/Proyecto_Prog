@@ -39,12 +39,64 @@ layout:decorate="admin/layout/base">
 
         <div class="form-group mb-3">
             <label for="precio_total">Precio total:</label>
-            <input type="number" th:field="*{precio_total}" id="precio_total" step="0.01" class="form-control" required>
+            <input type="number" th:field="*{precio_total}" id="precio_total" step="0.01" class="form-control" readonly>
         </div>
-
+    
         <button type="submit" class="btn btn-primary">Crear Alquiler</button>
         <a th:href="@{/admin/alquileres}" class="btn btn-secondary">Cancelar</a>
     </form>
+    
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const cocheSelect = document.getElementById('coche');
+            const fechaInicio = document.getElementById('fecha_inicio');
+            const fechaFin = document.getElementById('fecha_fin');
+            const precioTotal = document.getElementById('precio_total');
+            
+            // Get coches data from Thymeleaf
+            const coches = /*[[${coches}]]*/ [];
+            const precios = {};
+            
+            // Debug logging
+            console.log('Coches:', coches);
+            
+            // Create a map of car IDs to their daily prices
+            coches.forEach(function(coche) {
+                precios[coche.id] = parseFloat(coche.precio);
+                console.log(`Coche ID: ${coche.id}, Precio: ${coche.precio}`);
+            });
+        
+            function calcularPrecioTotal() {
+                const cocheId = cocheSelect.value;
+                const inicio = new Date(fechaInicio.value);
+                const fin = new Date(fechaFin.value);
+                
+                console.log('Calculating price for:', {
+                    cocheId: cocheId,
+                    inicio: inicio,
+                    fin: fin,
+                    precioPorDia: precios[cocheId]
+                });
+                
+                if(cocheId && !isNaN(inicio) && !isNaN(fin)) {
+                    const dias = Math.max(1, Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24)));
+                    const precioPorDia = precios[cocheId];
+                    
+                    console.log('Días calculados:', dias);
+                    
+                    if(dias > 0 && precioPorDia) {
+                        const total = (dias * precioPorDia).toFixed(2);
+                        console.log('Precio total calculado:', total);
+                        precioTotal.value = total;
+                    }
+                }
+            }
+        
+            cocheSelect.addEventListener('change', calcularPrecioTotal);
+            fechaInicio.addEventListener('change', calcularPrecioTotal);
+            fechaFin.addEventListener('change', calcularPrecioTotal);
+        });
+        </script>
 
     <div th:if="${error}" class="alert alert-danger mt-3" th:text="${error}"></div>
 </main>

@@ -26,10 +26,12 @@
               </a>
           </li>
           <li class="nav-item">
-              <a class="nav-link text-danger d-flex align-items-center" href="/">
-                  <i class="bi bi-box-arrow-right me-2"></i> Logout
-              </a>
-          </li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="nav-link text-danger border-0 bg-transparent d-flex align-items-center w-100">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </button>
+            </form>
+        </li>
       </ul>
   </nav>
 </header>

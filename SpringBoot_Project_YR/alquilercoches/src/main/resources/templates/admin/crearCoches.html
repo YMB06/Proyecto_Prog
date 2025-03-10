@@ -4,7 +4,7 @@ layout:decorate="admin/layout/base">
 <main layout:fragment="content" class="container-fluid flex-grow-1 p-4" style="margin-left: 250px;">
     <h1>Crear Nuevo Coche</h1>
     
-    <form th:action="@{/admin/coches/crear}" th:object="${coche}" method="post">
+    <form th:action="@{/admin/coches/crear}" th:object="${coche}" method="post" enctype="multipart/form-data">
         <div class="form-group mb-3">
             <label for="marca">Marca:</label>
             <input type="text" th:field="*{marca}" id="marca" class="form-control" required>
@@ -29,7 +29,15 @@ layout:decorate="admin/layout/base">
             <label for="color">Color:</label>
             <input type="text" th:field="*{color}" id="color" class="form-control" required>
         </div>
-
+        <div class="form-group mb-3">
+            <label for="file">Imagen del coche:</label>
+            <input type="file" 
+                   name="file" 
+                   id="file" 
+                   class="form-control" 
+                   accept="image/*"
+                   required>
+        </div>
           <!-- New inputs start here -->
           <div class="form-group mb-3">
             <label for="precio">Precio por día:</label>
@@ -42,15 +50,7 @@ layout:decorate="admin/layout/base">
                    required>
         </div>
 
-        <div class="form-group mb-3">
-            <label for="imagen">Imagen del coche:</label>
-            <input type="file" 
-                   name="imagen" 
-                   id="imagen" 
-                   class="form-control" 
-                   accept="image/*"
-                   required>
-        </div>
+
 
         <button type="submit" class="btn btn-primary">Crear Coche</button>
         <a th:href="@{/admin/coches}" class="btn btn-secondary">Cancelar</a>

@@ -29,7 +29,21 @@
             </div>
         </div>
     </div>
-    
+    <!-- Accesos rápidos -->
+<div class="mt-4">
+    <h4>Accesos Rápidos</h4>
+    <div class="d-flex gap-3">
+        <a th:href="@{/admin/coches/crear}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Agregar Coche
+        </a>
+        <a th:href="@{/admin/alquileres/crear}" class="btn btn-success">
+            <i class="bi bi-calendar-plus"></i> Nuevo Alquiler
+        </a>
+        <a th:href="@{/admin/clientes}" class="btn btn-warning">
+            <i class="bi bi-people"></i> Ver Clientes
+        </a>
+    </div>
+</div>
     <!-- Últimos alquileres -->
     <div class="mt-5">
         <h4>Últimos Alquileres</h4>
@@ -48,31 +62,17 @@
                 <tbody>
                     <tr th:each="alquiler : ${ultimosAlquileres}">
                         <td th:text="${alquiler.id}"></td>
-                        <td th:text="${alquiler.cliente_nombre}"></td>
-                        <td th:text="${alquiler.coche.modelo}"></td>
+                        <td th:text="${alquiler.cliente.nombre + ' ' + alquiler.cliente.apellidos}"></td>
+                        <td th:text="${alquiler.coche.marca + ' ' + alquiler.coche.modelo}"></td>
                         <td th:text="${alquiler.fecha_inicio}"></td>
                         <td th:text="${alquiler.fecha_fin}"></td>
-                        <td th:text="${alquiler.precio_total}"></td>
+                        <td th:text="${alquiler.precio_total + ' €'}"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Accesos rápidos -->
-    <div class="mt-4">
-        <h4>Accesos Rápidos</h4>
-        <div class="d-flex gap-3">
-            <a href="/admin/coches/nuevo" class="btn btn-primary">
-                <i class="bi bi-plus-lg"></i> Agregar Coche
-            </a>
-            <a href="/admin/alquileres/nuevo" class="btn btn-success">
-                <i class="bi bi-calendar-plus"></i> Nuevo Alquiler
-            </a>
-            <a href="/admin/clientes" class="btn btn-warning">
-                <i class="bi bi-people"></i> Ver Clientes
-            </a>
-        </div>
-    </div>
+   
 </main>
 </html>
