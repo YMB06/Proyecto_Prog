@@ -12,6 +12,10 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(Clientes cliente) {
         this.cliente = cliente;
     }
+  // Add this method to get access to the Cliente object
+  public Clientes getCliente() {
+    return this.cliente;
+}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

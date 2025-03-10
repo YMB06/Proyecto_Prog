@@ -11,7 +11,7 @@
                     <img th:if="${coche.imagen}" 
                          th:src="@{/uploads/coches/{imagen}(imagen=${coche.imagen})}"
                          class="card-img-top" 
-                         style="height: 300px; object-fit: contain; max-width: 100%;"
+                         style="height: 300px; object-fit: contain;"
                          th:alt="${coche.marca + ' ' + coche.modelo}">
                 </div>
             </div>
@@ -40,19 +40,101 @@
                                 <span th:text="${coche.precio + '€'}" class="ms-2"></span>
                             </li>
                         </ul>
-                        
-                        <div class="d-grid gap-2">
-                            <a href="#" class="btn btn-primary">
-                                <i class="bi bi-calendar-plus me-2"></i>Reservar Ahora
-                            </a>
-                            <a th:href="@{/coches}" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left me-2"></i>Volver a la lista
-                            </a>
-                        </div>
+
+                        <!-- Rental Form -->
+                        <form th:action="@{/alquiler/reservar}" method="post" id="rentalForm" class="mt-4">
+                            <input type="hidden" name="cocheId" th:value="${coche.id}">
+                            
+                            <div class="mb-3">
+                                <label for="fecha_inicio" class="form-label">Fecha de inicio:</label>
+                                <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="fecha_fin" class="form-label">Fecha de fin:</label>
+                                <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+                            </div>
+
+                            <div id="precioTotal" class="alert alert-info d-none mb-3">
+                                <!-- Price will be displayed here -->
+                            </div>
+
+                            <div id="availabilityMessage" class="alert d-none mb-3">
+                                <!-- Availability message will be displayed here -->
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                                    <i class="bi bi-calendar-plus me-2"></i>Reservar Ahora
+                                </button>
+                                <a th:href="@{/coches}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Volver
+                                </a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const precioBase = /*[[${coche.precio}]]*/ 0;
+            const cocheId = /*[[${coche.id}]]*/ 0;
+            const fechaInicio = document.getElementById('fecha_inicio');
+            const fechaFin = document.getElementById('fecha_fin');
+            const precioTotal = document.getElementById('precioTotal');
+            const availabilityMessage = document.getElementById('availabilityMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            fechaInicio.min = today;
+            fechaFin.min = today;
+
+            async function checkAvailabilityAndCalculatePrice() {
+                if (!fechaInicio.value || !fechaFin.value) return;
+
+                const start = new Date(fechaInicio.value);
+                const end = new Date(fechaFin.value);
+                
+                if (end <= start) {
+                    showMessage('La fecha de fin debe ser posterior a la fecha de inicio', false);
+                    return;
+                }
+
+                const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+                const total = days * precioBase;
+
+                // Show total price
+                precioTotal.textContent = `Precio total para ${days} día(s): ${total.toFixed(2)}€`;
+                precioTotal.classList.remove('d-none');
+
+                // Check availability
+                try {
+                    const response = await fetch(`/api/alquiler/check-availability?cocheId=${cocheId}&startDate=${fechaInicio.value}&endDate=${fechaFin.value}`);
+                    const available = await response.json();
+                    
+                    showMessage(
+                        available ? '¡Vehículo disponible para estas fechas!' : 'Lo sentimos, el vehículo no está disponible para estas fechas.',
+                        available
+                    );
+                    submitBtn.disabled = !available;
+                } catch (error) {
+                    showMessage('Error al verificar disponibilidad', false);
+                }
+            }
+
+            function showMessage(message, isSuccess) {
+                availabilityMessage.textContent = message;
+                availabilityMessage.className = `alert alert-${isSuccess ? 'success' : 'danger'} mb-3`;
+                availabilityMessage.classList.remove('d-none');
+            }
+
+            fechaInicio.addEventListener('change', checkAvailabilityAndCalculatePrice);
+            fechaFin.addEventListener('change', checkAvailabilityAndCalculatePrice);
+        });
+    </script>
 </div>
 </html>
