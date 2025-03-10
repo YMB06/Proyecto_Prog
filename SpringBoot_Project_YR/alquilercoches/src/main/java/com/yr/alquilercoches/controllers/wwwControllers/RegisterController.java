@@ -16,21 +16,33 @@ public class RegisterController {
 
     @Autowired
     private ClienteService clienteService;
-
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("cliente", new Clientes());
-        return "www/register/register";
+        return "www/Register/register";
     }
 
     @PostMapping("/register")
     public String registrarCliente(@ModelAttribute Clientes cliente) {
-        cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
+        // Debug original password
+        String rawPassword = cliente.getPassword();
+        System.out.println("Registering user with password length: " + rawPassword.length());
+        
+        // Encode password
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        cliente.setPassword(encodedPassword);
         cliente.setRole("ROLE_USER");
+        
+        System.out.println("Stored hash: " + encodedPassword);
+        // Verify we can match it immediately
+        boolean verifies = passwordEncoder.matches(rawPassword, encodedPassword);
+        System.out.println("Verification after encoding: " + verifies);
+        
         clienteService.save(cliente);
         return "redirect:/login?registered";
     }
-}
+    }

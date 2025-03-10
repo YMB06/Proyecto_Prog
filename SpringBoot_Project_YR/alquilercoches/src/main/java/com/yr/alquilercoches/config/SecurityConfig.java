@@ -26,48 +26,54 @@ public class SecurityConfig {
     @Autowired
     private ClienteUserDetailsService userDetailsService;
 
-   @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/admin/**").hasRole("ADMIN")
-            .anyRequest().permitAll()
-        )
-        .formLogin(form -> form
-            .loginPage("/login")
-            .loginProcessingUrl("/login")
-            .usernameParameter("username")
-            .passwordParameter("password")
-            .successHandler((request, response, authentication) -> {
-                if (authentication.getAuthorities().stream()
-                        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-                    response.sendRedirect("/admin/index");
-                } else {
-                    response.sendRedirect("/");
-                }
-            })
-            .failureUrl("/login?error=true")
-            .permitAll()
-        )
-        .logout(logout -> logout
-            .logoutSuccessUrl("/login?logout")
-            .permitAll()
-        );
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", 
+                               "/uploads/**", "/register", "/login", "/").permitAll()
+                .anyRequest().hasAnyRole("USER", "ADMIN")
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .successHandler((request, response, authentication) -> {
+                    if (authentication.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                        response.sendRedirect("/admin/index");
+                    } else {
+                        response.sendRedirect("/");
+                    }
+                })
+                .failureUrl("/login?error=true")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            )
+            .authenticationProvider(authenticationProvider());
 
-    return http.build();
-}
+        return http.build();
+    }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+        System.out.println("AuthenticationProvider configured with PasswordEncoder: " + passwordEncoder().getClass().getName());
         return provider;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10); // Use strength 10
+        System.out.println("Created new BCryptPasswordEncoder instance");
+        return encoder;
     }
 }
