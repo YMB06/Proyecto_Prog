@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yr.alquilercoches.models.entities.Alquiler;
@@ -53,6 +54,45 @@ public class AdminAlquilerController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al crear el alquiler: " + e.getMessage());
             return "redirect:/admin/alquileres/crear"; // Updated redirect path
+        }
+    }
+    @PostMapping("/admin/alquileres/eliminar/{id}")
+    public String eliminarAlquiler(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            alquilerService.deleteById(id);
+            redirectAttributes.addFlashAttribute("mensaje", "Alquiler eliminado exitosamente");
+            return "redirect:/admin/alquileres";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al eliminar el alquiler: " + e.getMessage());
+            return "redirect:/admin/alquileres";
+        }
+    }
+    @GetMapping("/admin/alquileres/editar/{id}")
+    public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
+        try {
+            Alquiler alquiler = alquilerService.getId(id);
+            List<Coches> coches = cochesService.getAll();
+            List<Clientes> clientes = clienteService.getAll();
+            
+            model.addAttribute("alquiler", alquiler);
+            model.addAttribute("coches", coches);
+            model.addAttribute("clientes", clientes);
+            return "admin/editarAlquiler";
+        } catch (Exception e) {
+            return "redirect:/admin/alquileres";
+        }
+    }
+    
+    @PostMapping("/admin/alquileres/editar/{id}")
+    public String editarAlquiler(@PathVariable Long id, @ModelAttribute Alquiler alquiler, RedirectAttributes redirectAttributes) {
+        try {
+            alquiler.setId(id);
+            alquilerService.update(alquiler);
+            redirectAttributes.addFlashAttribute("mensaje", "Alquiler actualizado exitosamente");
+            return "redirect:/admin/alquileres";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al actualizar el alquiler: " + e.getMessage());
+            return "redirect:/admin/alquileres/editar/" + id;
         }
     }
 }

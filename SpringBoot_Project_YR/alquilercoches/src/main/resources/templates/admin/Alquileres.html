@@ -28,14 +28,17 @@ layout:decorate="admin/layout/base">
                         <td th:text="${alquileres.cliente.id}"></td>
                         <td th:text="${alquileres.precio_total + ' €'}"></td>
                         <td>
-                            <a th:href="@{/admin/Alquileres/editar/{id}(id=${alquileres.id})}" class="btn btn-primary btn-sm">
+                            <a th:href="@{/admin/alquileres/editar/{id}(id=${alquileres.id})}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{/admin/Alquileres/borrar/{id}(id=${alquileres.id})}" class="btn btn-danger btn-sm">
-                                <i class="bi bi-trash"></i> Borrar
-                            </a>
+                            <form th:action="@{/admin/alquileres/eliminar/{id}(id=${alquileres.id})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm" 
+                                        onclick="return confirm('¿Estás seguro de que quieres eliminar este alquiler?')">
+                                    <i class="bi bi-trash"></i> Borrar
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
