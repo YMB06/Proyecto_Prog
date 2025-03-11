@@ -22,13 +22,10 @@ public class ClienteService  {
    private PasswordEncoder passwordEncoder;
 
    public Clientes save(Clientes cliente) {
-       // Ensure password is encoded when saving
-       System.out.println("Saving user with username: " + cliente.getUsername());
-       String encodedPassword = passwordEncoder.encode(cliente.getPassword());
-       cliente.setPassword(encodedPassword);
-       System.out.println("Password encoded: " + encodedPassword);
-       return clienteRepository.save(cliente);
-   }
+    System.out.println("Saving user with username: " + cliente.getUsername());
+    return clienteRepository.save(cliente); // Asume que la contraseña ya viene codificada.
+}
+
     
      public List<Clientes> getAll(){
         return clienteRepository.findAll();
