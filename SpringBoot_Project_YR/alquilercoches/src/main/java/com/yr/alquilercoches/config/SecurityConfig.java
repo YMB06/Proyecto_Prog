@@ -66,14 +66,12 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
-        System.out.println("AuthenticationProvider configured with PasswordEncoder: " + passwordEncoder().getClass().getName());
         return provider;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10); // Use strength 10
-        System.out.println("Created new BCryptPasswordEncoder instance");
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 }
+
